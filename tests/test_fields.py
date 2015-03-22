@@ -537,6 +537,31 @@ class TestUUIDField(FieldValues):
     field = serializers.UUIDField()
 
 
+class TestBinaryField(FieldValues):
+    """
+    Valid and invalid values for `BinaryField`.
+    """
+    valid_inputs = {
+        # TODO: Fix me to be actual binaryfield things
+        # Things that are not strings/binary strings are probably invalid (integers, boolean whatever)
+        # Strings will be encode to utf-8
+        # base64 -> binary field
+        # default encoding utf-8, base64 could be an option
+        # output is always a unicode string
+        'abc': 'abc'
+    }
+    invalid_inputs = {
+        # TODO: Fix me to be actual binaryfield things
+        1: ['Expects a string or a bytestring']
+        '': ['This field may not be blank.']
+    }
+    outputs = {
+        # TODO: Fix me to be actual binaryfield things
+        'abc': 'abc'
+    }
+    field = serializers.BinaryField()
+
+
 # Number types...
 
 class TestIntegerField(FieldValues):
