@@ -541,23 +541,32 @@ class TestBinaryField(FieldValues):
     """
     Valid and invalid values for `BinaryField`.
     """
+    empty_values = [None, b'']
     valid_inputs = {
-        # TODO: Fix me to be actual binaryfield things
-        # Things that are not strings/binary strings are probably invalid (integers, boolean whatever)
-        # Strings will be encode to utf-8
-        # base64 -> binary field
-        # default encoding utf-8, base64 could be an option
-        # output is always a unicode string
-        'abc': 'abc'
+        # TODO: Clarify the following logic and move it into
+        # documentation.
+        #
+        # Valid inputs to this field are always strings, whether
+        # they're a sequence of bytes or encoded to unicode.
+        #
+        # No matter what, they're internally represented as a raw
+        # sequence of bytes, which is what is stored by
+        # Django. Outputs are primarily uncode encoded
+        # strings. Additionally, when the input encoding is specified,
+        # there exists a helper method to retrieve the decoded
+        # content, rather than the encoded blob.
+        b'abc': b'abc',
+        u'abc': b'abc'
     }
     invalid_inputs = {
         # TODO: Fix me to be actual binaryfield things
         1: ['Expects a string or a bytestring']
+        True: ['Expects a string or a bytestring'],
         '': ['This field may not be blank.']
     }
     outputs = {
         # TODO: Fix me to be actual binaryfield things
-        'abc': 'abc'
+        b'abc': u'abc'
     }
     field = serializers.BinaryField()
 
